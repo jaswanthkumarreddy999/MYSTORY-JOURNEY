@@ -1,4 +1,4 @@
-package com.mystory.journey.backend;
+package com.MyStory.Journey.BackEnd;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
