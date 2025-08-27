@@ -1,14 +1,14 @@
-package com.mystory.journey.backend;
+package com.mystory.journey.backend.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-public class hello {
+public class Home {
     @GetMapping("/home")
     public String greet() {
-        return "Welcome to my website";
+        return "welcome to my website";
     }
+    
 }
