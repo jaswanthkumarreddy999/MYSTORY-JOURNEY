@@ -58,11 +58,10 @@ const Navbar = () => {
   <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></span>
   
   {/* Text */}
-  <Link to="/signin" className="relative z-10 group-hover:text-white transition-colors duration-300">
+  <Link to="/signin" className="relative z-10 group-hover:text-white transition-colors duration-300 hover:shadow-2xl">
     Sign In
   </Link>
 </div>
-
 
     </nav>
   );
