@@ -1,6 +1,7 @@
 import HeroSection from "../components/HeroSection";
 import Trust from "../components/Trust";
 import CompImages from "../components/CompImages";
+import Service from "../components/Service";
 const Home = () => {
   return (
 
@@ -9,6 +10,7 @@ const Home = () => {
       <HeroSection />
       <CompImages/>
       <Trust/>
+      <Service/>
     </>
    
     
