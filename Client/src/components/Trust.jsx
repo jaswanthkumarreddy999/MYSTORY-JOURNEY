@@ -1,5 +1,5 @@
 import React from "react";
-import { GraduationCap, Book, Notebook } from "lucide-react";
+import { GraduationCap, Book, Notebook ,MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Trust = () => {
@@ -15,7 +15,7 @@ const Trust = () => {
       desc: "Curated courses to accelerate your programming journey"
     },
     {
-      icon: <Book className="w-8 h-8 text-white" />,
+      icon: <MessageCircle className="w-8 h-8 text-white" />,
       title: "Support Anytime",
       desc: "Round-the-clock support for uninterrupted learning"
     }
@@ -90,10 +90,7 @@ const Trust = () => {
             className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-8"
             variants={cardVariants}
             custom={index % 2 === 0 ? "left" : "right"}
-            whileHover={{ 
-              y: -10,
-              transition: { duration: 0.3 }
-            }}
+           
           >
             {/* Icon circle */}
             <motion.div
