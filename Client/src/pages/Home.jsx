@@ -8,6 +8,7 @@ const Home = () => {
   
       <HeroSection />
       <CompImages/>
+      <Trust/>
     </>
    
     
