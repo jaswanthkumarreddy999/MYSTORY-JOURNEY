@@ -16,13 +16,14 @@ public class User {
     private String userName;
     private String email;
     private boolean verified;
+    private String phoneNumber;
 
 
-    public User(String id, String userName, String email, boolean verified) {
-        this.id = id;
+    public User( String userName, String email,String phoneNumber, boolean verified) {
         this.userName = userName;
         this.email = email;
         this.verified = verified;
+        this.phoneNumber = phoneNumber;
     }
 
     public User() {
@@ -35,6 +36,14 @@ public class User {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setUserName(String userName) {

@@ -11,8 +11,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "mysecretkey123"; // change in production
-
+    private final String SECRET_KEY = "mySuperSecretKeyForJwtGeneration12345678900"; // change in production
     // Generate token with email as subject
     public String generateToken(String email) {
         long expirationTime = 1000L * 60 * 60 * 24 * 30; // 30 days

@@ -21,32 +21,17 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    // step 1: request OTP (login or signup)
     public String sendOtp(String email, String otp) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            // new user -> create placeholder (username will come later)
-            user = new User();
-            user.setEmail(email);
-            user.setVerified(false);
-            userRepository.save(user);
-        }
-
-        // Do NOT generate OTP again; use the one passed in
-        // otp = otpService.generateOtp(email); // REMOVE this line
-
-        // Call MailService to actually send the OTP email
         try {
-            mailService.sendOtpEmail(email, otp); // make sure mailService is @Autowired
-            System.out.println("Email sent successfully"); // debug
+            mailService.sendOtpEmail(email, otp);
+            System.out.println("Email sent successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return otp; // only for debug; remove in production
+        return otp;
     }
 
-    // step 2: verify OTP and login
     public String verifyOtp(String email, String otp, String username) {
         if (otpService.verifyOtp(email, otp)) {
             User user = userRepository.findByEmail(email);
@@ -57,10 +42,14 @@ public class AuthService {
                 user.setVerified(true);
                 userRepository.save(user);
 
-                // ✅ Generate JWT token valid 30 days
                 return jwtUtil.generateToken(email);
             }
         }
         return null;
+    }
+
+    public boolean isNewUser(String email) {
+        User user = userRepository.findByEmail(email);
+        return user == null;
     }
 }

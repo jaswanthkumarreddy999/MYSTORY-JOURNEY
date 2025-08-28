@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, Phone, LogIn, UserPlus } from 'lucide-react';
 
-const BACKEND_API = import.meta.env.VITE_BACKEND_API;
+const BACKEND_API = "http://localhost:8080";
 
 const LoginForm = () => {
   const [isSignup, setIsSignup] = useState(false);
