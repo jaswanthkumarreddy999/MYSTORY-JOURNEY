@@ -15,8 +15,9 @@ const HeroSection = () => {
           Welcome to MSJourneyX
         </h1>
         <p className="mt-4 text-medium text-gray-700">
-        Learn DSA with structured roadmaps, practice sheets, and curated resources — 
-        start your journey today or subscribe for updates!
+        Dream big, take the first step, and we’ll walk with you. We’re students just like you, aiming high, learning together, and building our future.
+
+Join us, explore your potential, and let’s achieve great things — together!
         </p>
         <div className="mt-6 flex gap-4 items-center">
   {/* Get Started Button */}
@@ -36,7 +37,7 @@ const HeroSection = () => {
   >
     Subscribe
   </a>
-</div>
+      </div>
 
 
        

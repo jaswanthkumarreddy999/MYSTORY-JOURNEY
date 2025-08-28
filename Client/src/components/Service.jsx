@@ -50,7 +50,7 @@ const Service = () => {
   <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-blue-100 mb-4">
     <Book className="w-7 h-7 text-blue-500" />
   </div>
-  <h3 className="font-semibold text-lg text-gray-900">Helpful Resources</h3>
+  <h3 className="font-semibold text-lg text-gray-900">Resources</h3>
   <p className="text-gray-500 text-sm mt-4">
   These resources guided me well throughout my journey and made learning easier.
   </p>

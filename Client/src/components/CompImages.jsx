@@ -12,7 +12,13 @@ const CompImages = () => {
   ];
 
   return (
-    <div className="w-full bg-white py-10">
+    <div className="w-full relative bg-white py-10">
+      {/* Left Gradient Overlay - Light Gray */}
+      <div className="absolute left-0 top-0 h-full w-5 bg-gradient-to-r from-gray-200 to-transparent z-10 pointer-events-none"></div>
+      
+      {/* Right Gradient Overlay - Light Gray */}
+      <div className="absolute right-0 top-0 h-full w-5 bg-gradient-to-l from-gray-200 to-transparent z-10 pointer-events-none"></div>
+
       <Marquee pauseOnHover={true} speed={70} gradient={false}>
         {logos.map((src, index) => (
           <div
