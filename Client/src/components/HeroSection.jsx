@@ -15,14 +15,31 @@ const HeroSection = () => {
           Welcome to MSJourneyX
         </h1>
         <p className="mt-4 text-medium text-gray-700">
-          Learn DSA with structured roadmaps, practice sheets, curated resources & more....
+        Learn DSA with structured roadmaps, practice sheets, and curated resources — 
+        start your journey today or subscribe for updates!
         </p>
-        <button className="relative mt-6 px-6 py-3 text-[16px] font-medium rounded-lg border text-black overflow-hidden group">
-          <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></span>
-          <span className="relative z-10 group-hover:text-white transition-colors duration-500 ease-in-out">
-            Get Started
-          </span>
-        </button>
+        <div className="mt-6 flex gap-4 items-center">
+  {/* Get Started Button */}
+  <button className="relative px-6 py-3 text-[16px] font-medium rounded-lg border text-black overflow-hidden group">
+    <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></span>
+    <span className="relative z-10 group-hover:text-white transition-colors duration-500 ease-in-out">
+      Get Started
+    </span>
+  </button>
+
+  {/* Subscribe Button (link to YouTube) */}
+  <a
+    href="https://www.youtube.com/@MYSTORY_JOURNEY"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-center bg-red-500 text-white px-6 py-3 rounded-full font-medium hover:bg-red-600 transition-colors duration-300"
+  >
+    Subscribe
+  </a>
+</div>
+
+
+       
       </motion.div>
 
       {/* Right Side Image */}
