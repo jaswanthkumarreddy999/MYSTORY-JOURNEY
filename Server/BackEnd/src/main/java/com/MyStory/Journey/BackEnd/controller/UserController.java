@@ -37,7 +37,7 @@ public class UserController {
 
         response.put("success", true);
         response.put("message", "User found successfully");
-        response.put("data", user);
+        response.put("user", user);
         return ResponseEntity.ok(response); // 200 OK
     }
 }
