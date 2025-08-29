@@ -1,10 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
-
-
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -12,52 +9,60 @@ export const AuthProvider = ({ children }) => {
   const [isModelOpen, setModelOpen] = useState(false);
   const [profile, setProfile] = useState(null);
 
-const login = (token) => {
+  const login = (token) => {
     try {
       const decoded = jwtDecode(token);
       localStorage.setItem("token", token);
       setUser(decoded);
-      
-      //fetchUserProfile();
-      console.log(decoded);
-      // Optional: Auto logout on token expiry
+
+      // Fetch profile immediately using decoded.sub (email)
+      fetchUserProfile(decoded.sub);
+
+      // Auto logout on expiry
       const expiresIn = decoded.exp * 1000 - Date.now();
-      setTimeout(() => {
-        logout();
-      }, expiresIn);
-      
-    } catch (err) {
-      console.error("Invalid token", err);
+      setTimeout(() => logout(), expiresIn);
+    } catch {
+      logout();
     }
   };
-  const fetchUserProfile = async () => {
-    if (!user || !user.sub) return;
+
+  const fetchUserProfile = async (email) => {
+    if (!email) return;
+
     try {
-      const res = await fetch(`http://localhost:8080/user/profile?userEmail=${encodeURIComponent(user.sub)}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const res = await fetch(
+        `http://localhost:8080/user/profile?email=${encodeURIComponent(email)}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
+
       const data = await res.json();
-      if (data.success) {
-        setProfile(data.profile);
+    
+      if (res.ok && data.success) {
+        setProfile(data.userName);
+        console.log(data.userName);
       } else {
-        console.error('Failed to fetch profile:', data.message);
+        setProfile(null);
       }
-    } catch (err) {
-      console.error('Error fetching profile:', err);
+    } catch {
+      setProfile(null);
     }
-  }
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/"; // Redirect to login page
     setUser(null);
+    setProfile(null);
+    window.location.href = "/";
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (token) {
       try {
         const decoded = jwtDecode(token);
@@ -67,24 +72,23 @@ const login = (token) => {
           logout();
         } else {
           setUser(decoded);
-          console.log(decoded)
+          fetchUserProfile(decoded.sub);
         }
-      } catch (err) {
+      } catch {
         logout();
       }
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000); // Simulate loading delay
-   
+
+    setTimeout(() => setLoading(false), 1000);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading,isModelOpen,setModelOpen,profile}}>
+    <AuthContext.Provider
+      value={{ user, login, logout, loading, isModelOpen, setModelOpen, profile }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// custom hook
 export const useAuth = () => useContext(AuthContext);

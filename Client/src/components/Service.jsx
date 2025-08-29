@@ -15,7 +15,7 @@ const Service = () => {
   }, []);
 
   return (
-    <div className="py-16 px-20 bg-white">
+    <div className="py-16 md:px-20 px-12 bg-white">
       <div className="grid mx-auto md:grid-cols-2 items-start">
         
         {/* Left Side - Text */}

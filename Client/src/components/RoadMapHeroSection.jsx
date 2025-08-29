@@ -1,10 +1,11 @@
 import React from 'react'
 
-const Roadmaps = () => {
+const RoadMapHeroSection = () => {
   return (
     <div>
       
     </div>
   )
 }
-export default Roadmaps
+
+export default RoadMapHeroSection

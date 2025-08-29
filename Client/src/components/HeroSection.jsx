@@ -12,7 +12,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-16 py-16 md:py-20 bg-gray-50 h-[600px]">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-16 py-16 md:py-20 bg-gray-50">
       {/* Left Side Content */}
       <div
         data-aos="fade-right"
