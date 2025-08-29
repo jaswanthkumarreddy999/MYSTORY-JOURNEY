@@ -25,7 +25,7 @@ public class UserController {
     private UserService userService;
     @GetMapping("/profile")
     public ResponseEntity<?> getProile(@RequestParam String email) {
-        System.out.println("hijjj");
+        
         Map<String, Object> response = new HashMap<>();
         User user = userService.getUser(email);
         if (user == null) {
@@ -33,12 +33,9 @@ public class UserController {
             response.put("success", false);
             return ResponseEntity.badRequest().body(response);
         }
-        response.put("id", user.getId());
-        response.put("userName", user.getUserName());
-        response.put("email", user.getEmail());
-        response.put("verified", user.isVerified());
-        response.put("phoneNumber", user.getPhoneNumber());
-        return ResponseEntity.ok(response);
+        response.put("user", user);
+        response.put("success", true);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
     
 }

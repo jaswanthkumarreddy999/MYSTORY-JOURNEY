@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const fetchUserProfile = async (email) => {
+    console.log("Fetching profile for email:", email);
     if (!email) return;
 
     try {
@@ -42,10 +43,12 @@ export const AuthProvider = ({ children }) => {
       );
 
       const data = await res.json();
+      console.log("Profile fetch response:", data);
     
-      if (res.ok && data.success) {
-        setProfile(data.userName);
-        console.log(data.userName);
+      if (data.success) {
+        setProfile(data.user);
+        console.log("Current user (from response):", data.user);
+      
       } else {
         setProfile(null);
       }
@@ -54,6 +57,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
