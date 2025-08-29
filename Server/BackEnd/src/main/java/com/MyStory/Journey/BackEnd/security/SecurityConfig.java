@@ -22,7 +22,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/home/**","/auth/**").permitAll()  // public URLs
+            .requestMatchers("/home/**","/auth/**","/user/**").permitAll()  // public URLs
             .requestMatchers("/admin/**").hasRole("ADMIN") // only ADMIN
             .anyRequest().authenticated()  // everything else requires login
         )
