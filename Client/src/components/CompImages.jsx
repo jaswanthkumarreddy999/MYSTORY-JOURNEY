@@ -23,7 +23,7 @@ const CompImages = () => {
         {logos.map((src, index) => (
           <div
             key={index}
-            className="w-40 h-20 mx-10 flex items-center justify-center"
+            className="w-32 h-20 mx-10 flex items-center justify-center md:w-40"
           >
             <img
               src={src}

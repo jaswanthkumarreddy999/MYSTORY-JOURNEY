@@ -1,21 +1,29 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const HeroSection = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,   // animation speed
+      easing: "ease-in-out",
+      once: true,       // animation happens only once
+    });
+  }, []);
+
   return (
-    <div className="flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-16 py-16 md:py-20 bg-gray-50">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-16 py-16 md:py-20 bg-gray-50 h-[600px]">
       {/* Left Side Content */}
-      <motion.div
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
+      <div
+        data-aos="fade-right"
         className="w-full md:w-1/2 max-w-lg text-center md:text-left"
       >
         <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight">
           Join <span className="text-amber-400 text-4xl sm:text-5xl">DSA!</span>
         </h1>
         <p className="mt-4 sm:mt-5 text-gray-700 text-base sm:text-lg">
-          Master DSA with our platform. From beginner to pro, get the resources and support you need. Start your coding journey today!
+          Master DSA with our platform. From beginner to pro, get the resources
+          and support you need. Start your coding journey today!
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
           {/* Get Started Button */}
@@ -36,13 +44,11 @@ const HeroSection = () => {
             Subscribe
           </a>
         </div>
-      </motion.div>
+      </div>
 
       {/* Right Side Image */}
-      <motion.div
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
+      <div
+        data-aos="fade-left"
         className="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center"
       >
         <img
@@ -50,7 +56,7 @@ const HeroSection = () => {
           alt="Code learning"
           className="rounded-2xl shadow-xl w-full max-w-md md:max-w-full object-cover"
         />
-      </motion.div>
+      </div>
     </div>
   );
 };

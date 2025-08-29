@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { User, LogOut, Settings } from "lucide-react";
@@ -8,6 +8,7 @@ const Navbar = () => {
   const activeUrl = location.pathname;
   const { setModelOpen, profile, user, loading, logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -18,8 +19,21 @@ const Navbar = () => {
     { path: "/leaderboards", label: "Leaderboards" },
   ];
 
+  // Add scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="flex justify-between items-center px-10 py-5 bg-white border-b border-gray-200 shadow-md">
+    <nav
+      className={`flex justify-between items-center px-10 py-5 bg-white border-b border-gray-200 sticky top-0 z-50 transition-shadow duration-300 ${
+        scrolled ? "shadow-md" : ""
+      }`}
+    >
       {/* Logo */}
       <Link to="/">
         <div className="flex items-center gap-3">
@@ -85,7 +99,7 @@ const Navbar = () => {
               <button
                 className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100 transition-colors"
                 onClick={() => {
-                  logout(); // Make sure you have a logout function in your context
+                  logout();
                   setDropdownOpen(false);
                 }}
               >
