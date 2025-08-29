@@ -18,20 +18,22 @@ public class SecurityConfig {
     }
 
     @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    // Public endpoints (no JWT required)
-                    .requestMatchers("/auth/**", "/verify-otp", "/login", "/register").permitAll()
-                    // Everything else requires JWT
-                    .anyRequest().authenticated())
-            // Add JWT filter before Spring’s own username/password filter
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(cors -> {
+                }) // enable CORS using global config
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // Public endpoints (no JWT required)
+                        .requestMatchers("/auth/**", "/verify-otp", "/login", "/register").permitAll()
+                        // Everything else requires JWT
+                        .anyRequest().authenticated())
+                // Add JWT filter before Spring’s own username/password filter
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-}
+        return http.build();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
