@@ -40,7 +40,9 @@ const LoginForm = () => {
 
       setStep(2);
       if (data.isNew) setIsSignup(true);
-      setSuccess(data.message);
+
+      // don't show backend message, only custom UI
+      setSuccess('');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -80,9 +82,7 @@ const LoginForm = () => {
       setStep(1);
       setIsSignup(false);
 
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1000);
+      window.location.href = '/';
     } catch (err) {
       setError(err.message);
     } finally {
@@ -113,7 +113,7 @@ const LoginForm = () => {
 
       <form onSubmit={step === 1 ? handleSendOtp : handleSubmit} className="space-y-4">
         {error && <p className="text-red-500 text-sm text-center bg-red-100 p-2 rounded">{error}</p>}
-        {success && <p className="text-black text-sm text-center bg-spring-leaves-100 p-2 rounded">{success}</p>}
+        {success && <p className="text-green-600 text-sm text-center bg-green-100 p-2 rounded">{success}</p>}
 
         {step === 1 ? (
           <div className="relative">
@@ -126,7 +126,7 @@ const LoginForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-spring-leaves-500 text-gray-800 text-sm sm:text-base"
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-800 text-sm sm:text-base"
                 placeholder="Enter your email"
                 disabled={loading}
               />
@@ -134,8 +134,9 @@ const LoginForm = () => {
           </div>
         ) : (
           <>
+            {/* Custom UI text only */}
             <p className="text-sm text-gray-600 text-center mb-4">
-              OTP sent to <span className="font-medium text-spring-leaves-500">{formData.email}</span>
+              OTP sent to <span className="font-medium text-green-500">{formData.email}</span>
             </p>
             <div className="relative">
               <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-1">OTP</label>
@@ -147,7 +148,7 @@ const LoginForm = () => {
                   name="otp"
                   value={formData.otp}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-spring-leaves-500 text-gray-800 text-sm sm:text-base"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-800 text-sm sm:text-base"
                   placeholder="Enter the OTP"
                   disabled={loading}
                 />
@@ -166,7 +167,7 @@ const LoginForm = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-spring-leaves-500 text-gray-800 text-sm sm:text-base"
+                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-800 text-sm sm:text-base"
                       placeholder="Enter your name"
                       disabled={loading}
                     />
@@ -182,7 +183,7 @@ const LoginForm = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-spring-leaves-500 text-gray-800 text-sm sm:text-base"
+                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 text-gray-800 text-sm sm:text-base"
                       placeholder="Enter your phone number"
                       disabled={loading}
                     />
@@ -194,7 +195,7 @@ const LoginForm = () => {
             <button
               type="button"
               onClick={handleBack}
-              className="w-full py-2 px-4 bg-spring-leaves-50 text-gray-700 hover:bg-spring-leaves-200 transition duration-200 text-sm sm:text-base"
+              className="w-full py-2 px-4 bg-gray-100 text-gray-700 hover:bg-gray-200 transition duration-200 text-sm sm:text-base rounded-md"
               disabled={loading}
             >
               Back to Email
@@ -204,7 +205,7 @@ const LoginForm = () => {
 
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-black text-white hover:bg-spring-leaves-800 transition duration-200 text-sm sm:text-base flex items-center justify-center rounded-sm"
+          className="w-full py-2 px-4 bg-gray-900 text-white hover:bg-gray-950 transition duration-200 text-sm sm:text-base flex items-center justify-center rounded-md"
           disabled={loading}
         >
           {loading ? 'Processing...' : step === 1 ? 'Get OTP' : isSignup ? <><UserPlus className="w-5 h-5 mr-2" />Sign Up</> : <><LogIn className="w-5 h-5 mr-2" />Login</>}
@@ -213,7 +214,7 @@ const LoginForm = () => {
 
       <p className="text-sm text-center text-gray-600 mt-4">
         {isSignup ? 'Already have an account?' : "Don't have an account?"}{' '}
-        <button onClick={handleToggle} className="text-spring-leaves-500 hover:underline ml-1">
+        <button onClick={handleToggle} className="text-gray-800 hover:underline ml-1">
           {isSignup ? 'Login' : 'Sign Up'}
         </button>
       </p>
