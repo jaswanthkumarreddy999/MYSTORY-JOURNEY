@@ -25,6 +25,7 @@ public class UserController {
     private UserService userService;
     @GetMapping("/profile")
     public ResponseEntity<?> getProile(@RequestParam String email) {
+        
         Map<String, Object> response = new HashMap<>();
         User user = userService.getUser(email);
         if (user == null) {
@@ -37,7 +38,7 @@ public class UserController {
         response.put("email", user.getEmail());
         response.put("verified", user.isVerified());
         response.put("phoneNumber", user.getPhoneNumber());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
     
 }
