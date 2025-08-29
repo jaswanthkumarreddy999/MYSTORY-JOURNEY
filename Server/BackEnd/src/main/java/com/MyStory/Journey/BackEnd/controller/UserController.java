@@ -33,11 +33,7 @@ public class UserController {
             response.put("success", false);
             return ResponseEntity.badRequest().body(response);
         }
-        response.put("id", user.getId());
-        response.put("userName", user.getUserName());
-        response.put("email", user.getEmail());
-        response.put("verified", user.isVerified());
-        response.put("phoneNumber", user.getPhoneNumber());
+        response.put("user", user);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
     
