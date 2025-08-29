@@ -34,6 +34,10 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
         response.put("user", user);
+<<<<<<< HEAD
+        response.put("success", true);
+=======
+>>>>>>> 2b9a49789be4334734b096b37c87cb74da9e68e3
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
     

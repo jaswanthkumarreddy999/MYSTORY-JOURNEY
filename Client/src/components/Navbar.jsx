@@ -82,7 +82,7 @@ const Navbar = () => {
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <User className="w-6 h-6" />
-            <span className="font-medium">{user?.sub.slice(0, 4) || "Guest"}</span>
+            <span className="font-medium">{profile?.userName}</span>
           </div>
 
           {/* Dropdown Menu */}
