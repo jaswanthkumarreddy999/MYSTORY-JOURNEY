@@ -3,8 +3,8 @@ package com.mystory.journey.backend.repo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.mystory.journey.backend.model.User;
+import com.mystory.journey.backend.model.RoadMap;
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
-    User findByEmail(String email);
+public interface RoadMapRepository extends MongoRepository<RoadMap, String> {
+    RoadMap findBytitle(String title);
 }
