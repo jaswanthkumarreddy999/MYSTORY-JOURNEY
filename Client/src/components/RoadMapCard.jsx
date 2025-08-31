@@ -2,9 +2,21 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Star, Eye } from "lucide-react";
 import RoadMapReviewModel from "./RoadMapReviewModel";
+import { useAuth } from "../context/AuthContext";
 
 const RoadMapCard = ({ title, description, image, rating, views, modalImage, faqs }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { user, setModelOpen } = useAuth();  
+
+  const handleExplore = () => {
+    if (!user) {
+      // If not logged in, open login modal
+      setModelOpen(true);
+      return;
+    }
+    // If logged in, open roadmap modal
+    setIsOpen(true);
+  };
 
   return (
     <>
@@ -22,7 +34,7 @@ const RoadMapCard = ({ title, description, image, rating, views, modalImage, faq
           />
 
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={handleExplore}
             className="absolute bottom-3 left-3 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-lg
               opacity-0 translate-y-3 transition-all duration-500 ease-out
               group-hover:opacity-100 group-hover:translate-y-0"
@@ -55,7 +67,7 @@ const RoadMapCard = ({ title, description, image, rating, views, modalImage, faq
         </div>
       </motion.div>
 
-      {/* Modal */}
+      {/* Roadmap Modal */}
       <RoadMapReviewModel
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

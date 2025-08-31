@@ -21,7 +21,7 @@ const HeroSection = () => {
         <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight">
           Join <span className="text-amber-400 text-4xl sm:text-5xl">DSA!</span>
         </h1>
-        <p className="mt-4 sm:mt-5 text-gray-700 text-base sm:text-lg">
+        <p className="mt-4 sm:mt-5 text-gray-500 text-base sm:text-lg">
           Master DSA with our platform. From beginner to pro, get the resources
           and support you need. Start your coding journey today!
         </p>
