@@ -4,17 +4,24 @@ import { Star, Eye } from "lucide-react";
 import RoadMapReviewModel from "./RoadMapReviewModel";
 import { useAuth } from "../context/AuthContext";
 
-const RoadMapCard = ({ title, description, image, rating, views, modalImage, faqs }) => {
+const RoadMapCard = ({ id,title, description, image, rating, views, modalImage, faqs }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { user, setModelOpen } = useAuth();  
+  const { user, profile,setModelOpen } = useAuth();  
 
-  const handleExplore = () => {
+  const handleExplore = async () => {
     if (!user) {
-      // If not logged in, open login modal
       setModelOpen(true);
       return;
     }
-    // If logged in, open roadmap modal
+
+    try {
+      await fetch(`http://localhost:8080/roadmap/viewsupdate/${profile.id}/${id}`, {
+        method: "POST",
+      });
+    } catch (err) {
+      console.error("Failed to update views:", err);
+    }
+
     setIsOpen(true);
   };
 
