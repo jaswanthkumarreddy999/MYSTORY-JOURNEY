@@ -15,16 +15,14 @@ const RoadMapCard = ({ id,title, description, image, rating, views, modalImage, 
     }
 
     try {
-      await fetch(`http://localhost:8080/roadmap/viewsupdate/${profile.id}/${id}`, {
-        method: "POST",
+      await fetch(`http://localhost:8080/roadmap/viewsupdate?userid=${profile.id}&roadmapid=${id}`, {
+        method: "PUT",
       });
     } catch (err) {
       console.error("Failed to update views:", err);
     }
-
     setIsOpen(true);
   };
-
   return (
     <>
       <motion.div
