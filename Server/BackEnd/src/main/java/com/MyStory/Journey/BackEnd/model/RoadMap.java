@@ -2,7 +2,10 @@ package com.mystory.journey.backend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "roadmaps") // MongoDB collection name
 public class RoadMap  {
@@ -14,9 +17,10 @@ public class RoadMap  {
     private String description;
     private String image;
     private int rating;
-    private String views;
+    private int views;
     private String modalImage;
     private List<Faq> faqs;
+    private Set<String> viewedBy = new HashSet<>();
 
     public static class Faq {
         private String q;
@@ -52,7 +56,7 @@ public class RoadMap  {
     }
 
     public RoadMap(String title, String description, String image, int rating,
-            String views, String modalImage, List<Faq> faqs) {
+            int views, String modalImage, List<Faq> faqs, Set<String> viewedBy) {
         this.title = title;
         this.description = description;
         this.image = image;
@@ -60,6 +64,7 @@ public class RoadMap  {
         this.views = views;
         this.modalImage = modalImage;
         this.faqs = faqs;
+        this.viewedBy = viewedBy;
     }
 
     // ✅ Getters & Setters
@@ -103,11 +108,11 @@ public class RoadMap  {
         this.rating = rating;
     }
 
-    public String getViews() {
+    public int getViews() {
         return views;
     }
 
-    public void setViews(String views) {
+    public void setViews(int views) {
         this.views = views;
     }
 
@@ -125,5 +130,13 @@ public class RoadMap  {
 
     public void setFaqs(List<Faq> faqs) {
         this.faqs = faqs;
+    }
+
+    public Set<String> getViewedBy() {
+        return viewedBy;
+    }
+
+    public void setViewedBy(Set<String> viewedBy) {
+        this.viewedBy = viewedBy;
     }
 }
