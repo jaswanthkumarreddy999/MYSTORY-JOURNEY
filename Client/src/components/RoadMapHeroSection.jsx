@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { ChevronDown } from "lucide-react"; // Import arrow icon
 
 const RoadMapHeroSection = () => {
   useEffect(() => {
@@ -20,15 +21,18 @@ const RoadMapHeroSection = () => {
         {/* Content */}
         <div className="relative max-w-3xl px-8 z-10" data-aos="fade-right">
           <h1 className="text-4xl font-extrabold mb-4">ROADMAPS</h1>
-          <p className="text-md text-gray-300 leading-relaxed">
+          <p className="text-md text-gray-300 leading-relaxed mb-3">
             Roadmaps are your path to success. Step by step, with consistency and
             hard work, you’ll turn vision into achievement.
           </p>
         </div>
+
+        {/* Bouncing down arrow */}
+       
+          
+      
       </div>
     </>
-    
-
   );
 };
 
