@@ -3,7 +3,7 @@ import RoadMapCard from "../components/RoadMapCard";
 import RoadMapHeroSection from "../components/RoadMapHeroSection";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import Testimonial from "../components/Testimonial";
 const Roadmaps = () => {
   const [roadmaps, setRoadmaps] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,10 @@ const Roadmaps = () => {
         console.error("Error fetching roadmap data:", error);
         setRoadmaps([]); // fallback to empty array
       } finally {
-        setLoading(false);
+        setTimeout(()=>{
+          setLoading(false);
+        },1000);
+      
       }
     };
 
@@ -31,13 +34,17 @@ const Roadmaps = () => {
   return (
     <>
       <RoadMapHeroSection />
-      <div className="min-h-screen bg-gray-50 px-6 py-12">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2 text-center">
-          Your Next Move
-        </h2>
-        <p className="text-gray-600 text-center max-w-2xl mx-auto mb-10">
-          We guide you with clear directions at every step, helping you move forward with confidence.
-        </p>
+      <div className="px-6 py-16">
+      <div>
+  <h2 className="text-3xl font-bold text-gray-800 mb-3 text-center">
+  Smart Path
+  </h2>
+
+  {/* underline */}
+  <div className="mx-auto mb-10 h-[3px] w-40 bg-gray-600 rounded animate-grow"></div>
+</div>
+
+        
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
@@ -52,6 +59,7 @@ const Roadmaps = () => {
             : roadmaps.map((roadmap) => <RoadMapCard key={roadmap.id} {...roadmap} />)}
         </div>
       </div>
+      <Testimonial/>
     </>
   );
 };

@@ -34,14 +34,7 @@ const Trust = () => {
 
   return (
     <div className="bg-gray-50 py-16">
-      {/* Section Title */}
-      <h1
-        className="text-center mb-12 text-4xl font-medium text-gray-800"
-        data-aos="fade-down"
-      >
-        Our Highlights
-      </h1>
-
+    
       {/* Cards */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
         {items.map((item, index) => (

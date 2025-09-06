@@ -29,7 +29,7 @@ const RoadMapCard = ({ id,title, description, image, rating, views, modalImage, 
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="relative bg-white rounded-xl shadow-md overflow-hidden group flex flex-col h-full"
+        className="relative bg-white rounded-lg shadow-md overflow-hidden group flex flex-col h-full"
       >
         <div className="relative">
           <img
