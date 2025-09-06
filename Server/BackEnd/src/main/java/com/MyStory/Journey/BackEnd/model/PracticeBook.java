@@ -13,6 +13,20 @@ public class PracticeBook {
     private String subtitle;
     private String thumbnail;
     private List<String> chapters;
+    public int getProgress() {
+        return progress;
+    }
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+    public long getLessons() {
+        return lessons;
+    }
+    public void setLessons(long lessons) {
+        this.lessons = lessons;
+    }
+    private int progress;
+    private long lessons; 
     public PracticeBook() {
     }
     public String getId() {

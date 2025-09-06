@@ -34,23 +34,18 @@ public class PracticeBooksController {
             response.put("data", null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-
-        Map<String, Integer> lessonsMap = new HashMap<>();
-        Map<String, Integer> progressMap = new HashMap<>();
-
         for (PracticeBook book : allPracticeBooks) {
-            int totalLessons = practiceBooksService.getTotalLessons(book);
+            long lessons = practiceBooksService.getTotalLessons(book);
             int progress = practiceBooksService.getProgress(book);
-
-            lessonsMap.put(book.getId(), totalLessons);
-            progressMap.put(book.getId(), progress);
+            book.setProgress(progress);
+            book.setLessons(lessons);
+            allPracticeBooks.add(book);
+           
         }
 
         response.put("success", true);
         response.put("message", "Roadmaps fetched successfully");
         response.put("data", allPracticeBooks);
-        response.put("totalLessons", lessonsMap);
-        response.put("progress", progressMap);
         response.put("gradient", "from-purple-600 via-purple-700 to-indigo-800");
         return ResponseEntity.ok(response);
     }
