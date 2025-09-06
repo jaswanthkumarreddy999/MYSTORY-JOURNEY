@@ -42,9 +42,8 @@ public class PracticeBooksController {
         }
 
         response.put("success", true);
-        response.put("message", "Roadmaps fetched successfully");
+        response.put("message", "PracticeBooks fetched successfully");
         response.put("data", allPracticeBooks);
-        response.put("gradient", "from-purple-600 via-purple-700 to-indigo-800");
         return ResponseEntity.ok(response);
     }
     

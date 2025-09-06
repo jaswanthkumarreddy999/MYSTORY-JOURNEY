@@ -11,9 +11,16 @@ public class PracticeBook {
     private String id;
     private String title;
     private String subtitle;
+    private String gradient;
     private List<String> chapters;
     public int getProgress() {
         return progress;
+    }
+    public String getGradient() {
+        return gradient;
+    }
+    public void setGradient(String gradient) {
+        this.gradient = gradient;
     }
     public void setProgress(int progress) {
         this.progress = progress;
