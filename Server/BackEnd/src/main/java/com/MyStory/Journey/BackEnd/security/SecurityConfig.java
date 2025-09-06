@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints (no JWT required)
-                        .requestMatchers("/auth/**", "/verify-otp", "/login", "/register","/roadmap/**").permitAll()
+                        .requestMatchers("/auth/**", "/verify-otp", "/login", "/register","/roadmap/**","practicebooks/**").permitAll()
                         // Everything else requires JWT
                         .anyRequest().authenticated())
                 // Add JWT filter before Spring’s own username/password filter
