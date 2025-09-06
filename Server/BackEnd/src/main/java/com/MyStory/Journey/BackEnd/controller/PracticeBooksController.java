@@ -39,8 +39,6 @@ public class PracticeBooksController {
             int progress = practiceBooksService.getProgress(book);
             book.setProgress(progress);
             book.setLessons(lessons);
-            allPracticeBooks.add(book);
-           
         }
 
         response.put("success", true);

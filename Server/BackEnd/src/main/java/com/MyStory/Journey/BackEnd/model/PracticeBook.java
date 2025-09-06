@@ -11,7 +11,6 @@ public class PracticeBook {
     private String id;
     private String title;
     private String subtitle;
-    private String thumbnail;
     private List<String> chapters;
     public int getProgress() {
         return progress;
@@ -46,12 +45,6 @@ public class PracticeBook {
     }
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
-    }
-    public String getThumbnail() {
-        return thumbnail;
-    }
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
     public List<String> getChapters() {
         return chapters;
