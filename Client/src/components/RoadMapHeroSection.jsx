@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { ChevronDown } from "lucide-react"; // Import arrow icon
+
 
 const RoadMapHeroSection = () => {
   useEffect(() => {
@@ -26,11 +26,6 @@ const RoadMapHeroSection = () => {
             hard work, you’ll turn vision into achievement.
           </p>
         </div>
-
-        {/* Bouncing down arrow */}
-       
-          
-      
       </div>
     </>
   );

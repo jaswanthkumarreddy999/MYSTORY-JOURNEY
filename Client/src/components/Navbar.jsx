@@ -13,7 +13,7 @@ const Navbar = () => {
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/roadmaps", label: "Roadmaps" },
-    { path: "/practice-sheets", label: "Practice Sheets" },
+    { path: "/praticebooks", label: "Practice Books" },
     { path: "/resources", label: "Resources" },
     { path: "/courses", label: "Courses" },
     { path: "/leaderboards", label: "Leaderboards" },
@@ -38,7 +38,7 @@ const Navbar = () => {
       <Link to="/">
         <div className="flex items-center gap-3">
           <img
-            src="https://ik.imagekit.io/jezimf2jod/ChatGPT%20Image%20Aug%2027,%202025,%2004_53_09%20PM.png?updatedAt=1756293878873"
+            src="https://ik.imagekit.io/jezimf2jod/ChatGPT%20Image%20Aug%2027,%202025,%2004_49_49%20PM.png?updatedAt=1756293616642"
             alt="Logo"
             className="w-12 h-12 rounded-full"
           />
