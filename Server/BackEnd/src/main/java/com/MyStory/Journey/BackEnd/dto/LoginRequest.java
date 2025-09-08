@@ -1,4 +1,4 @@
-package com.mystory.journey.backend.model;
+package com.mystory.journey.backend.dto;
 
 public class LoginRequest {
     
