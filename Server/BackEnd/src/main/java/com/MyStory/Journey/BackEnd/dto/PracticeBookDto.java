@@ -12,15 +12,13 @@ public class PracticeBookDto {
     public String getId() {
         return id;
     }
-    public PracticeBookDto(String id, String subtitle, String title, int chapters, int lessons, int progress,
-            String gradient) {
+    public PracticeBookDto(String id, String subtitle, String title, int chapters, int lessons, int progress) {
         this.id = id;
         this.subtitle = subtitle;
         this.title = title;
         this.chapters = chapters;
         this.lessons = lessons;
         this.progress = progress;
-        this.gradient = gradient;
     }
     public void setId(String id) {
         this.id = id;
@@ -55,11 +53,4 @@ public class PracticeBookDto {
     public void setProgress(int progress) {
         this.progress = progress;
     }
-    public String getGradient() {
-        return gradient;
-    }
-    public void setGradient(String gradient) {
-        this.gradient = gradient;
-    }
-    private String gradient;
 }
