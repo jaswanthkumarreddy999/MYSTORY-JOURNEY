@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Play, BookOpen } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+
 const CircularProgress = ({ progress }) => {
   const radius = 18;
   const circumference = 2 * Math.PI * radius;
@@ -37,13 +38,31 @@ const CircularProgress = ({ progress }) => {
   );
 };
 
-const BookCards = () => {
-  // Mock auth context - replace with your actual useAuth hook
-  const { profile, loading } = useAuth();
+// 🎨 Gradient palette
+const gradients = [
+  "linear-gradient(to bottom right, #7c3aed, #6d28d9, #3730a3)", // purple → indigo
+  "linear-gradient(to bottom right, #2563eb, #1d4ed8, #0e7490)", // blue → cyan
+  "linear-gradient(to bottom right, #eab308, #ea580c, #b91c1c)", // yellow → red
+  "linear-gradient(to bottom right, #14b8a6, #0891b2, #1d4ed8)", // teal → blue
+  "linear-gradient(to bottom right, #16a34a, #047857, #115e59)", // green → teal
+  "linear-gradient(to bottom right, #4f46e5, #6d28d9, #9d174d)", // indigo → pink
+];
 
-  
+// ✅ Hash book.id → stable gradient
+const getGradientForId = (id) => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = id.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % gradients.length;
+  return gradients[index];
+};
+
+const BookCards = () => {
+  const { profile } = useAuth();
   const scrollRef = useRef(null);
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -63,33 +82,29 @@ const BookCards = () => {
       return () =>
         scrollElement.removeEventListener("scroll", checkScrollButtons);
     }
-  }, [books]);
+  }, []);
 
-  // Fetch books from API
+  // ✅ Fetch books & assign gradients
   useEffect(() => {
-    if (!profile || !profile.id) {
-      console.log("Profile not loaded yet");
-      return;
-    }
-    
+    if (!profile) return;
     const fetchBooks = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
-          `http://localhost:8080/practicebooks/getpracticebooks?userid=${profile.id}`
+          `http://localhost:8080/practicebooks/getpracticebooks?userid=68b0fd7706d0d9901abd0c3c`
         );
         const result = await response.json();
         if (result.success) {
-          setBooks(result.data);
-          console.log(result.data); // result.data is the array
-        }
- 
-        
-        if (result.success) {
-          setBooks(result.data);
-          console.log("Books loaded:", result.data);
+          const booksWithGradients = result.data.map((book) => ({
+            ...book,
+            gradient: getGradientForId(book.id),
+          }));
+          setBooks(booksWithGradients);
         }
       } catch (error) {
         console.error("Error fetching books:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -104,6 +119,21 @@ const BookCards = () => {
     }
   };
 
+  // ✅ Skeleton Card Component
+  const SkeletonCard = () => (
+    <div className="min-w-[360px] max-w-[360px] flex-shrink-0 rounded-lg shadow-md relative overflow-hidden">
+      <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+      <div className="relative z-10 p-8 h-64 flex flex-col">
+        <div className="h-4 w-32 bg-white/50 rounded mb-2 animate-pulse" />
+        <div className="h-6 w-48 bg-white/50 rounded mb-4 animate-pulse" />
+        <div className="mt-auto">
+          <div className="h-4 w-24 bg-white/50 rounded mb-2 animate-pulse" />
+          <div className="h-4 w-16 bg-white/50 rounded animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="relative w-full py-8">
       {/* Header */}
@@ -115,8 +145,8 @@ const BookCards = () => {
         <p className="text-gray-600">Continue your programming journey</p>
       </div>
 
-      {/* Left button */}
-      {canScrollLeft && (
+      {/* Left Button */}
+      {canScrollLeft && !loading && (
         <button
           onClick={() => scroll("left")}
           className="absolute left-2 top-[58%] -translate-y-1/2 
@@ -135,54 +165,51 @@ const BookCards = () => {
         ref={scrollRef}
         className="flex overflow-x-auto gap-6 scrollbar-hide scroll-smooth px-12 pb-4"
       >
-        {books.map((book) => (
-          <div
-            key={book.id}
-            className={`min-w-[360px] max-w-[360px] flex-shrink-0 rounded-2xl shadow-lg relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:scale-[1.02] cursor-pointer bg-gradient-to-br ${book.gradient}`}
-          >
-            {/* Decorative elements */}
-            <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 rounded-full blur-xl"></div>
-            <div className="absolute bottom-8 left-4 w-8 h-8 bg-white/20 rounded-full blur-lg"></div>
-            <div className="absolute inset-0 bg-black/10"></div>
+        {loading
+          ? Array.from({ length: 4 }).map((_, idx) => (
+              <SkeletonCard key={idx} />
+            ))
+          : books.map((book) => (
+              <div
+                key={book.id}
+                className="min-w-[360px] max-w-[360px] flex-shrink-0 rounded-lg shadow-md relative overflow-hidden transition-all duration-500"
+              >
+                {/* ✅ Gradient Background */}
+                <div
+                  className="absolute inset-0"
+                  style={{ background: book.gradient }}
+                />
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
 
-            {/* Content */}
-            <div className="relative z-10 p-8 h-64 flex flex-col">
-              <p className="text-sm font-semibold text-white/90 mb-2 tracking-wide uppercase">
-                {book.subtitle}
-              </p>
-
-              <h2 className="text-2xl font-bold text-white leading-tight mb-auto drop-shadow-sm">
-                {book.title}
-              </h2>
-
-              <div className="flex justify-between items-end">
-                <div className="text-white">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-white/80 rounded-full"></div>
-                    <p className="text-sm font-semibold">
-                      {book.chapters} Chapters
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-white/80 rounded-full"></div>
-                    <p className="text-sm font-semibold">{book.lessons} Items</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center gap-2">
-                  <CircularProgress progress={book.progress} />
-                  <p className="text-xs font-bold text-white drop-shadow-sm">
-                    {book.progress}% Complete
+                {/* Content */}
+                <div className="relative z-10 p-8 h-64 flex flex-col">
+                  <p className="text-sm font-medium text-white/80 mb-2 tracking-wide">
+                    {book.subtitle}
                   </p>
+                  <h2 className="text-2xl font-bold text-white leading-tight mb-auto">
+                    {book.title}
+                  </h2>
+                  <div className="flex justify-between items-end">
+                    <div className="text-white/90">
+                      <p className="text-sm font-medium">
+                        {book.chapters} Chapters
+                      </p>
+                      <p className="text-sm font-medium">{book.lessons} Items</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <CircularProgress progress={book.progress} />
+                      <p className="text-xs font-semibold text-white/90">
+                        {book.progress}% Complete
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
       </div>
 
-      {/* Right button */}
-      {canScrollRight && (
+      {/* Right Button */}
+      {canScrollRight && !loading && (
         <button
           onClick={() => scroll("right")}
           className="absolute right-2 top-[58%] -translate-y-1/2 
