@@ -1,63 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Play, BookOpen } from "lucide-react";
 
-const dummyBooks = [
-  {
-    id: 1,
-    subtitle: "LeetCode's Interview Crash Course",
-    title: "Data Structures and Algorithms",
-    chapters: 13,
-    items: 149,
-    progress: 0,
-    gradient: "from-purple-600 via-purple-700 to-indigo-800",
-  },
-  {
-    id: 2,
-    subtitle: "Interview Essentials",
-    title: "System Design Basics",
-    chapters: 10,
-    items: 100,
-    progress: 30,
-    gradient: "from-blue-600 via-blue-700 to-cyan-800",
-  },
-  {
-    id: 3,
-    subtitle: "JavaScript Series",
-    title: "JavaScript Mastery",
-    chapters: 15,
-    items: 200,
-    progress: 45,
-    gradient: "from-yellow-500 via-orange-600 to-red-700",
-  },
-  {
-    id: 4,
-    subtitle: "React Series",
-    title: "React Deep Dive",
-    chapters: 12,
-    items: 120,
-    progress: 70,
-    gradient: "from-teal-500 via-cyan-600 to-blue-700",
-  },
-  {
-    id: 5,
-    subtitle: "C++ for Interviews",
-    title: "C++ STL Guide",
-    chapters: 8,
-    items: 90,
-    progress: 10,
-    gradient: "from-green-600 via-emerald-700 to-teal-800",
-  },
-  {
-    id: 6,
-    subtitle: "Python Fundamentals",
-    title: "Python for Coding Interviews",
-    chapters: 11,
-    items: 135,
-    progress: 85,
-    gradient: "from-indigo-600 via-purple-700 to-pink-800",
-  },
-];
-
 const CircularProgress = ({ progress }) => {
   const radius = 18;
   const circumference = 2 * Math.PI * radius;
@@ -96,6 +39,7 @@ const CircularProgress = ({ progress }) => {
 
 const BookCards = () => {
   const scrollRef = useRef(null);
+  const [books, setBooks] = useState([]);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -112,13 +56,33 @@ const BookCards = () => {
     const scrollElement = scrollRef.current;
     if (scrollElement) {
       scrollElement.addEventListener("scroll", checkScrollButtons);
-      return () => scrollElement.removeEventListener("scroll", checkScrollButtons);
+      return () =>
+        scrollElement.removeEventListener("scroll", checkScrollButtons);
     }
+  }, []);
+
+  // Fetch books from API
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/practicebooks/getpracticebooks"
+        );
+        const result = await response.json();
+        if (result.success) {
+          setBooks(result.data); // result.data is the array
+        }
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
   }, []);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const cardWidth = 360 + 24; // increased card width + gap
+      const cardWidth = 360 + 24; // card width + gap
       const scrollAmount = direction === "left" ? -cardWidth : cardWidth;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
@@ -155,45 +119,40 @@ const BookCards = () => {
         ref={scrollRef}
         className="flex overflow-x-auto gap-6 scrollbar-hide scroll-smooth px-12 pb-4"
       >
-        {dummyBooks.map((book) => (
+        {books.map((book) => (
           <div
             key={book.id}
             className="min-w-[360px] max-w-[360px] flex-shrink-0 rounded-lg shadow-md bg-gradient-to-br relative overflow-hidden transition-all duration-500"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${book.gradient}`} />
-            
-            {/* Subtle overlay */}
             <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
-            
-            {/* Decorative glow */}
             <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 rounded-full blur-xl" />
             <div className="absolute bottom-8 left-4 w-8 h-8 bg-white/20 rounded-full blur-lg" />
-            
-            <div className="relative p-8 h-64 flex flex-col">
-              {/* Subtitle */}
+
+            {/* Content */}
+            <div className="relative z-10 p-8 h-64 flex flex-col">
               <p className="text-sm font-medium text-white/80 mb-2 tracking-wide">
                 {book.subtitle}
               </p>
 
-              {/* Title */}
               <h2 className="text-2xl font-bold text-white leading-tight mb-auto">
                 {book.title}
               </h2>
 
-              {/* Bottom Section */}
               <div className="flex justify-between items-end">
                 <div className="text-white/90">
                   <div className="flex items-center gap-2 mb-1">
                     <div className="w-2 h-2 bg-white/60 rounded-full" />
-                    <p className="text-sm font-medium">{book.chapters} Chapters</p>
+                    <p className="text-sm font-medium">
+                      {book.chapters?.length || 0} Chapters
+                    </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-white/60 rounded-full" />
-                    <p className="text-sm font-medium">{book.items} Items</p>
+                    <p className="text-sm font-medium">{book.lessons} Items</p>
                   </div>
                 </div>
 
-                {/* Progress Section */}
                 <div className="flex flex-col items-center gap-2">
                   <CircularProgress progress={book.progress} />
                   <p className="text-xs font-semibold text-white/90">
@@ -208,20 +167,18 @@ const BookCards = () => {
 
       {/* Right button */}
       {canScrollRight && (
-       <button
-       onClick={() => scroll("right")}
-       className="absolute right-2 top-[58%] -translate-y-1/2 
+        <button
+          onClick={() => scroll("right")}
+          className="absolute right-2 top-[58%] -translate-y-1/2 
                   bg-white/40 backdrop-blur-md text-gray-800 
                   p-3 rounded-full z-20 
                   shadow-md hover:shadow-lg transition-all duration-300 hover:bg-white/70"
-       aria-label="Scroll right"
-     >
-       <ChevronRight className="w-5 h-5" />
-     </button>
-     
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
       )}
 
-      {/* Custom scrollbar hide styles */}
       <style jsx>{`
         .scrollbar-hide {
           -ms-overflow-style: none;
