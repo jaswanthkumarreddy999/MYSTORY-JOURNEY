@@ -1,5 +1,7 @@
 package com.mystory.journey.backend.model;
 
+import java.util.HashSet;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,12 +9,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Problem {
     @Id
     private String id;
-    private boolean status;
     private String title;
     private String myResource;
     private String resource;
     private String PracticeLink;
     private String notes;
+    private String difficulty;
+    private HashSet<String> solvedby;
+    private HashSet<String> markedby;
+    public HashSet<String> getMarkedby() {
+        return markedby;
+    }
+    public void setMarkedby(HashSet<String> markedby) {
+        this.markedby = markedby;
+    }
+    public HashSet<String> getSolvedby() {
+        return solvedby;
+    }
+    public void setSolvedby(HashSet<String> solvedby) {
+        this.solvedby = solvedby;
+    }
     public long getSubmissions() {
         return submissions;
     }
@@ -28,12 +44,6 @@ public class Problem {
     }
     public void setId(String id) {
         this.id = id;
-    }
-    public boolean isStatus() {
-        return status;
-    }
-    public void setStatus(boolean status) {
-        this.status = status;
     }
     public String getTitle() {
         return title;
@@ -74,9 +84,8 @@ public class Problem {
     public String getDifficulty() {
         return difficulty;
     }
+
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
-    private String difficulty;
-    
 }

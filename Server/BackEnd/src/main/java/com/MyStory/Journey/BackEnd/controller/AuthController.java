@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.mystory.journey.backend.model.LoginRequest;
-import com.mystory.journey.backend.model.RegisterRequest;
+import com.mystory.journey.backend.dto.LoginRequest;
+import com.mystory.journey.backend.dto.RegisterRequest;
 import com.mystory.journey.backend.model.User;
 import com.mystory.journey.backend.repo.UserRepository;
 import com.mystory.journey.backend.security.JwtUtil;

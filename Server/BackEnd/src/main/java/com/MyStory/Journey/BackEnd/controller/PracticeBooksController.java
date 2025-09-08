@@ -1,5 +1,6 @@
 package com.mystory.journey.backend.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mystory.journey.backend.model.PracticeBook;
+import com.mystory.journey.backend.dto.PracticeBookDto;
 import com.mystory.journey.backend.model.Problem;
 import com.mystory.journey.backend.service.PracticeBooksService;
 
@@ -24,47 +26,34 @@ public class PracticeBooksController {
     private PracticeBooksService practiceBooksService;
 
     @GetMapping("/getpracticebooks")
-    public ResponseEntity<Map<String, Object>> getPracticeBooks() {
+    public ResponseEntity<Map<String, Object>> getPracticeBooks(@RequestParam String userid) {
         Map<String, Object> response = new HashMap<>();
-        List<PracticeBook> allPracticeBooks = practiceBooksService.getPracticeBooks();
-
-        if (allPracticeBooks.isEmpty()) {
+        List<PracticeBookDto> allPracticeBooks = practiceBooksService.getPracticeBooks(userid);
+        if (allPracticeBooks == null) {
             response.put("success", false);
-            response.put("message", "No roadmaps found");
-            response.put("data", null);
+            response.put("message", "no books are found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        for (PracticeBook book : allPracticeBooks) {
-            long lessons = practiceBooksService.getTotalLessons(book);
-            int progress = practiceBooksService.getProgress(book);
-            book.setProgress(progress);
-            book.setLessons(lessons);
-        }
-
         response.put("success", true);
-        response.put("message", "PracticeBooks fetched successfully");
+        response.put("message", "books are found");
         response.put("data", allPracticeBooks);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);  
     }
     
     @GetMapping("/getproblems")
     public ResponseEntity<Map<String, Object>> getProblems() {
         Map<String, Object> response = new HashMap<>();
-
-        List<Problem> allProblems = practiceBooksService.getProblems(); // Inject ProblemRepository
-
-        if (allProblems.isEmpty()) {
+        List<Problem> allProblems = practiceBooksService.getProblems();
+        if (allProblems == null) {
             response.put("success", false);
-            response.put("message", "No problems found");
-            response.put("data", null);
+            response.put("message", "no problems are found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-
         response.put("success", true);
-        response.put("message", "Problems fetched successfully");
+        response.put("message", "problems are found");
         response.put("data", allProblems);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 
-        return ResponseEntity.ok(response);
     }
     
 }
